@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 400px;
+  height: auto;
+  margin: 100px auto;
+  /* padding: 15px 10px 20px 20px;
+  border: 2px solid #e0e0e0; */
+  box-shadow: 5px 10px 18px #888888;
+  border-radius: 20px;
+}
+
+.container div {
+  padding: 20px 0px 0px 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+  align-items: center;
+  margin-right: 10px;
+}
+
+#attachFile {
+  height: 25px;
+  cursor: pointer;
+}
+
+.add-btn {
+  border: none;
+  padding: 3px 18px;
+  height: 25px;
+  background-color: white;
+  font-weight: 500;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.87);
+  display: none;
+}
+
+.add-btn:hover {
+  background-color: #f7f7f7;
+  cursor: pointer;
+}
+
+.add-btn:focus {
+  outline: none;
+}
+
+.text {
+  padding-top: 20px;
+  margin: 0;
+  width: 300px;
+  outline: none;
+}
+
+.text-title {
+  margin: 0;
+  display: none;
+  width: 300px;
+  outline: none;
+}
+
+[contenteditable="true"]:empty:before {
+  content: attr(aria-placeholder);
+  color: #202124;
+  opacity: 0.8;
+  font-weight: 400;
+  cursor: text;
+  font-family: "Roboto", sans-serif;
+}
+
+.storedNotes {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.storedNotes li {
+  list-style: none;
+  /* border: 2px solid #e0e0e0; */
+  /* padding: 20px 40px 40px 20px; */
+  margin-top: 20px;
+  width: 410px;
+  border-radius: 20px;
+  height: 100%;
+}
+
+.storedNotes li h2 {
+  margin: 20px;
+}
+
+.storedNotes li p {
+  margin-top: 15px;
+  margin: 20px;
+}
+
+.storedNotes li button,
+input[type="color"],
+input[type="checkbox"] {
+  display: none;
+  margin: 10px;
+}
+
+.storedNotes li:hover button {
+  display: inline-block;
+  cursor: pointer;
+}
+
+li:hover input[type="color"] {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+li:hover input[type="checkbox"] {
+  display: inline-block;
+  height: 40px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 1px solid #888888;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.selected {
+  border: 1px solid black;
+  padding: 7px 5px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+[value~="Image"] {
+  display: none;
+}
+
+li:hover [value~="Image"] {
+  display: block;
+  cursor: pointer;
+}
+
+.panel {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
