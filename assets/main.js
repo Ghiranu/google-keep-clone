@@ -2,6 +2,7 @@ const h2 = document.querySelector(".text-title");
 const p = document.querySelector(".text");
 const noteContainer = document.querySelector(".container");
 
+// Note container with features section
 const description = document.querySelector(".text");
 description.addEventListener("click", () => {
   const container = document.querySelector(".container");
@@ -19,6 +20,7 @@ description.addEventListener("click", () => {
   const inputFile = document.getElementById("fileToAdd");
   inputFile.addEventListener("change", () => {
     const filesSelected = inputFile.files;
+    console.log(filesSelected);
 
     if (filesSelected.length > 0) {
       const fileToLoad = filesSelected[0];
@@ -61,6 +63,8 @@ addToDoBtn.addEventListener("click", function () {
     h2.innerText = "";
     h2.style.display = "none";
     bgColor.style.display = "none";
+    noteContainer.style.backgroundColor = "";
+    noteImage.style.display = "none";
   }
 
   if (title !== "" || text !== "") {
@@ -76,27 +80,15 @@ addToDoBtn.addEventListener("click", function () {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    hideElements();
-    location.reload();
+    }).then(() => displayToDos());
+    return hideElements();
   } else {
     hideElements();
   }
 });
+// End of note container section.
 
-function getToDos() {
-  return fetch("http://localhost:3000/todos", {
-    method: "GET",
-  }).then((result) => result.json());
-}
-
+// Main function that creates toDo elements with features section
 function createToDoElems(todos) {
   const fragment = document.createDocumentFragment();
   todos.forEach((todo) => {
@@ -142,6 +134,7 @@ function createToDoElems(todos) {
     panelOfCommands.appendChild(edit);
     panelOfCommands.appendChild(done);
     panelOfCommands.appendChild(remove);
+
     li.appendChild(image);
     li.appendChild(h2);
     li.appendChild(p);
@@ -173,7 +166,6 @@ function createToDoElems(todos) {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      location.reload();
     }
 
     function saveCheckbox() {
@@ -211,16 +203,14 @@ function createToDoElems(todos) {
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => res.json());
-      location.reload();
+      }).then(() => displayToDos());
     }
 
     function deleteNote() {
       const url = `http://localhost:3000/todos/${selectedNote}`;
       fetch(url, {
         method: "DELETE",
-      });
-      location.reload();
+      }).then(() => displayToDos());
     }
 
     function encodeImageFileAsURL() {
@@ -228,7 +218,6 @@ function createToDoElems(todos) {
 
       if (filesSelected.length > 0) {
         const fileToLoad = filesSelected[0];
-
         const fileReader = new FileReader();
 
         fileReader.onload = function (fileLoadedEvent) {
@@ -241,7 +230,6 @@ function createToDoElems(todos) {
           image.innerHTML = newImage.outerHTML;
 
           const selectedNote = todo.id;
-
           fetch(`http://localhost:3000/todos/${selectedNote}`, {
             method: "PATCH",
             body: JSON.stringify({
@@ -255,7 +243,6 @@ function createToDoElems(todos) {
         fileReader.readAsDataURL(fileToLoad);
       }
     }
-
     attach.addEventListener("change", encodeImageFileAsURL);
     color.addEventListener("blur", changeColor);
     edit.addEventListener("click", editContent);
@@ -265,6 +252,14 @@ function createToDoElems(todos) {
   });
 
   return fragment;
+}
+// End of main function section.
+
+// Displaying toDos section.
+function getToDos() {
+  return fetch("http://localhost:3000/todos", {
+    method: "GET",
+  }).then((result) => result.json());
 }
 
 async function displayToDos() {
@@ -283,5 +278,4 @@ async function displayToDos() {
     item.firstChild.innerHTML = toDos[i].image;
   });
 }
-
-displayToDos();
+// End of displaying toDo section.
